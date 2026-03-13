@@ -3,17 +3,50 @@ version: '3.8'
 # docker-compose -f docker-compose-app.yml up -d
 # 你需要修改system为你自身系统的仓库名
 services:
-  ai-agent-station-study:
-    image: system/ai-agent-station-study:1.0
-    container_name: ai-agent-station-study
-    restart: on-failure
+  # MCP 服务，CSDN 发帖，注意 CSDN_API_COOKIE 修改为你的。
+  mcp-server-csdn-app:
+    # 课程代码：https://gitcode.net/KnowledgePlanet/mcp-server-csdn
+    #    image: fuzhengwei/mcp-server-csdn-app:1.1
+    image: registry.cn-hangzhou.aliyuncs.com/fuzhengwei/mcp-server-csdn-app:1.1
+    container_name: mcp-server-csdn-app
+    restart: always
     ports:
-      - "8091:8091"
-    environment:
-      - TZ=PRC
-      - SERVER_PORT=8091
+      - "8101:8101"
     volumes:
       - ./log:/data/log
+    environment:
+      - TZ=PRC
+      - SERVER_PORT=8101
+      - CSDN_API_CATEGORIES=Java场景面试宝典
+      - CSDN_API_COOKIE=UN=m0_72406127; c_dl_prid=-; c_dl_rid=1742633926925_951367; c_dl_fref=https://blog.csdn.net/weixin_42511206/article/details/116257728; c_dl_fpage=/download/u011018979/21981126; c_dl_um=-; p_uid=U010000; __gads=ID=9ce49405503ce6f3:T=1755004619:RT=1755004619:S=ALNI_MYA57SpHjIzjbDf6PDhuk_sr_ic4A; Hm_lvt_6bcd52f51e9b3dce32bec4a3997715ac=1761373407; _clck=1k1oyqz%5E2%5Eg0g%5E0%5E2021; fid=20_56349246435-1764084860350-013661; csdn_newcert_m0_72406127=1; uuid_tt_dd=10_6640491850-1769761311658-995867; UserName=m0_72406127; UserInfo=8b1f5740dd90447bb48c973f9110ac9e; UserToken=8b1f5740dd90447bb48c973f9110ac9e; UserNick=Zzz_hl; AU=155; BT=1769933503754; dc_session_id=10_1773144077305.502523; c_first_ref=default; c_first_page=https%3A//blog.csdn.net/m0_72406127%3Ftype%3Dblog; c_dsid=11_1773144077332.953689; c_segment=11; c_adb=1; dc_sid=21ce73d84cc3bb924d64f6eccf8b8313; creative_popup=%7B%22arrowIcon%22%3A%22https%3A//i-operation.csdnimg.cn/images/0f13ec529b6b4195ad99894f76653e56.png%22%2C%22img%22%3A%22https%3A//i-operation.csdnimg.cn/images/37a01fdf021b437ab4a48c33b11e05e8.png%22%2C%22imgStyle%22%3A%22height%3A%2088px%3B%22%2C%22darkCfg%22%3A%7B%7D%2C%22role%22%3A%22lost%22%2C%22report%22%3A%7B%22spm%22%3A%223001.11122%22%2C%22extra%22%3A%22%22%7D%2C%22style%22%3A%22%22%2C%22arrowIconStyle%22%3A%22%22%2C%22url%22%3A%22https%3A//mp.csdn.net/edit%22%2C%22newTab%22%3Afalse%2C%22userName%22%3A%22m0_72406127%22%7D; SESSION=cebada6f-ddb4-4358-962a-e3a7bc65d208; creative_btn_mp=3; c_pref=https%3A//mp.csdn.net/; c_ref=https%3A//editor.csdn.net/; c_page_id=default; log_Id_pv=22; log_Id_view=407; dc_tos=tbomy2; log_Id_click=41
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - my-network
+
+  # 课程代码：https://gitcode.net/KnowledgePlanet/mcp-server-weixin
+  # MCP 服务，微信公众号通知
+  mcp-server-weixin-app:
+    #    image: fuzhengwei/mcp-server-weixin-app:1.1
+    image: registry.cn-hangzhou.aliyuncs.com/fuzhengwei/mcp-server-weixin-app:1.1
+    container_name: mcp-server-weixin-app
+    restart: always
+    ports:
+      - "8102:8102"
+    volumes:
+      - ./log:/data/log
+    # 微信公众号通知 https://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index
+    environment:
+      - TZ=PRC
+      - SERVER_PORT=8102
+      - WEIXIN_API_ORIGINAL_ID=gh_8622c51cd7d4
+      - WEIXIN_API_APP_ID=wxdf65cf9e6f701ccb
+      - WEIXIN_API_APP_SECRET=0e99c80a72625524a8699f50366b77af
+      - WEIXIN_API_TEMPLATE_ID=3nL2HGUhy_5cjfWGpdUDFQ3KuLnCqSnqpfimuTXZqbU
+      - WEIXIN_API_TOUSER=ocikD3Lt0nfxgzFhUuiGP_e7XxL8
     logging:
       driver: "json-file"
       options:
