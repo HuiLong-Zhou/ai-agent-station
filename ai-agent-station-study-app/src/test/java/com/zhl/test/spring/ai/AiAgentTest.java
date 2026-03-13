@@ -233,7 +233,7 @@ public class AiAgentTest {
                 ).build(),
                 new RagAnswerAdvisor(vectorStore, SearchRequest.builder()
                     .topK(5)
-                    .filterExpression("knowledge == article-prompt-words")
+                    .filterExpression("knowledge == 'article-prompt-words'")
                 .build())
             )
             .defaultOptions(ChatOptions.builder()

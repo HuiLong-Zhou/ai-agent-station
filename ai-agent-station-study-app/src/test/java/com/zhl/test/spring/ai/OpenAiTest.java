@@ -43,7 +43,7 @@ import java.util.stream.Collectors;
 @RunWith(SpringRunner.class)
 public class OpenAiTest {
 
-    @Value("classpath:data/file.txt")
+    @Value("classpath:data/file01.txt")
     private Resource fileTextResource;
 
     @Value("classpath:data/article-prompt-words.txt")
@@ -126,21 +126,23 @@ public class OpenAiTest {
     }
 
 
+    /**
+     * 注意需要上传知识库的编码！！
+     */
     @Test
     public void testUpload(){
 
-        TikaDocumentReader documentReader = new TikaDocumentReader(fileTextResource);
-//        TikaDocumentReader documentReader = new TikaDocumentReader(articlePromptWordsResource);
+//        TikaDocumentReader documentReader = new TikaDocumentReader(fileTextResource);
+        TikaDocumentReader documentReader = new TikaDocumentReader(articlePromptWordsResource);
+
         List<Document> documents = documentReader.get();
         List<Document> documentSplitterList = tokenTextSplitter.apply(documents);
 
-//        System.out.println(fileTextResource.contentLength());
-        documentSplitterList.forEach(doc -> doc.getMetadata().put("knowledge", "知识库名称-v4"));
-        documents.forEach(doc -> doc.getMetadata().put("knowledge", "知识库名称-v4"));
-//        documentSplitterList.forEach(doc -> doc.getMetadata().put("knowledge", "article-prompt-words"));
-//        documents.forEach(doc -> doc.getMetadata().put("knowledge", "article-prompt-words"));
+//        documentSplitterList.forEach(doc -> doc.getMetadata().put("knowledge", "知识库名称-v4"));
+//        documents.forEach(doc -> doc.getMetadata().put("knowledge", "知识库名称-v4"));
+        documentSplitterList.forEach(doc -> doc.getMetadata().put("knowledge", "article-prompt-words"));
+        documents.forEach(doc -> doc.getMetadata().put("knowledge", "article-prompt-words"));
 
-        System.out.println(documentSplitterList.size());
         pgVectorStore.accept(documentSplitterList);
 
         log.info("上传成功");
@@ -163,7 +165,7 @@ public class OpenAiTest {
         SearchRequest request = SearchRequest.builder()
             .query(message)
             .topK(5)
-            .filterExpression("knowledge == 'file-知识库名称-v4'")
+            .filterExpression("knowledge == '知识库名称-v4'")
             .build();
 
         List<Document> documents = pgVectorStore.similaritySearch(request);

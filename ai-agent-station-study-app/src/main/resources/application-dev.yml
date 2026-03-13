@@ -30,16 +30,13 @@ spring:
       connection-timeout: 30000 #数据库连接超时时间,默认30秒，即30000
       connection-test-query: SELECT 1
   ai:
-    vectorstore:
-      pgvector:
-        table-name: store_openai
     # 后续可将 openai 替换为 deepseek 或 本地部署的 ollama
     openai:
       base-url: https://apis.itedus.cn
       api-key: sk-IlO2hwKltrc0lZfV4a2a7b433b8e4715Be5e32D830538c62    # 已购买 临时的 api-key 见网址 https://openai.itedus.cn/#/setting
-#      embedding:
-#        options:
-#          model: text-embedding-3-small
+      embedding:
+        options:
+          model: text-embedding-3-small
 
 # MyBatis 配置【如需使用记得打开】
 #mybatis:
