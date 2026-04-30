@@ -1,6 +1,9 @@
 package com.zhl.domain.agent.model.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -11,6 +14,9 @@ import java.util.List;
  * @since 2026-04-08 11:39
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ArmoryCommandEntity {
 
     /**

@@ -2,8 +2,10 @@ package com.zhl.domain.agent.service.armory;
 
 import cn.bugstack.wrench.design.framework.tree.StrategyHandler;
 import com.zhl.domain.agent.model.entity.ArmoryCommandEntity;
+import com.zhl.domain.agent.model.valobj.AiAgentEnumVO;
 import com.zhl.domain.agent.service.armory.business.data.ILoadDataStrategy;
 import com.zhl.domain.agent.service.armory.factory.DefaultArmoryStrategyFactory;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,10 @@ public class RootNode extends AbstractArmorySupport {
 
     private final Map<String, ILoadDataStrategy> loadDataStrategyMap;
 
+    @Resource
+    private AiClientApiNode aiClientApiNode;
+
+
     /**
      * 通过 Spring 进行依赖注入
      */
@@ -34,7 +40,13 @@ public class RootNode extends AbstractArmorySupport {
     protected void multiThread(ArmoryCommandEntity requestParameter, DefaultArmoryStrategyFactory.DynamicContext dynamicContext) throws ExecutionException, InterruptedException, TimeoutException {
         // 通过策略加载数据
         String commandType = requestParameter.getCommandType();
-        ILoadDataStrategy loadDataStrategy = loadDataStrategyMap.get(commandType);
+        log.info("RootNode -- multiThread -- commandType = {}", commandType);
+
+        AiAgentEnumVO aiAgentEnumVO = AiAgentEnumVO.getByCode(commandType);
+        String loadDataStrategyKey = aiAgentEnumVO.getLoadDataStrategy();
+
+        ILoadDataStrategy loadDataStrategy = loadDataStrategyMap.get(loadDataStrategyKey);
+
         loadDataStrategy.loadData(requestParameter, dynamicContext);
     }
 
@@ -45,7 +57,7 @@ public class RootNode extends AbstractArmorySupport {
 
     @Override
     public StrategyHandler<ArmoryCommandEntity, DefaultArmoryStrategyFactory.DynamicContext, String> get(ArmoryCommandEntity armoryCommandEntity, DefaultArmoryStrategyFactory.DynamicContext dynamicContext) throws Exception {
-        return defaultStrategyHandler;
+        return aiClientApiNode;
     }
 
 }

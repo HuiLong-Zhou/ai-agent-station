@@ -3,6 +3,7 @@ package com.zhl.domain.agent.model.valobj;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 /**
  * <p>
@@ -15,8 +16,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public enum AiAgentEnumVO {
 
-    AI_CLIENT("客户端", "client", "ai_client_", "aiClientLoadDataStrategy"),
-    AI_CLIENT_MODEL("对话模型", "model", "ai_client_model_", "aiClientModelLoadDataStrategy"),
+    AI_CLIENT_API("对话API", "api", "ai_client_api_", "ai_client_api_data_list", "aiClientApiLoadDataStrategy"),
+    AI_CLIENT_MODEL("对话模型", "model", "ai_client_model_", "ai_client_model_data_list", "aiClientModelLoadDataStrategy"),
+    AI_CLIENT_SYSTEM_PROMPT("提示词", "prompt", "ai_client_system_prompt_", "ai_client_system_prompt_data_list", "aiClientSystemPromptLoadDataStrategy"),
+    AI_CLIENT_TOOL_MCP("mcp工具", "mcp", "ai_client_tool_mcp_", "ai_client_tool_mcp_data_list", "aiClientToolMCPLoadDataStrategy"),
+    AI_CLIENT_ADVISOR("顾问角色", "advisor", "ai_client_advisor_", "ai_client_advisor_data_list", "aiClientAdvisorLoadDataStrategy"),
+    AI_CLIENT("客户端", "client", "ai_client_", "ai_client_data_list", "aiClientLoadDataStrategy"),
+
 
     ;
 
@@ -36,9 +42,45 @@ public enum AiAgentEnumVO {
     private String beanNameTag;
 
     /**
+     * 数据名称，
+     */
+    private String dataName;
+
+    /**
      * 装配数据策略
      */
     private String loadDataStrategy;
+
+
+    /**
+     * 根据code获取对应的枚举
+     *
+     * @param code 枚举code值
+     * @return 对应的枚举，如果未找到则返回null
+     */
+    public static AiAgentEnumVO getByCode(String code) {
+        if(code == null) {
+            return null;
+        }
+        for (AiAgentEnumVO aiAgentEnumVO : AiAgentEnumVO.values()) {
+            if(aiAgentEnumVO.getCode().equals(code)) {
+                return aiAgentEnumVO;
+            }
+        }
+        throw new RuntimeException("code value " + code + " not exist!");
+    }
+
+    /**
+     * 获取拼接好的 beanName
+     * @param id
+     * @return
+     */
+    public String getBeanName(String id) {
+        if(id != null)
+            return this.beanNameTag + id;
+        throw new RuntimeException("id is null");
+    }
+
 
 
 }
