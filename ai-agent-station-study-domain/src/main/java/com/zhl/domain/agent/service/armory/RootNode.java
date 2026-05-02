@@ -39,13 +39,7 @@ public class RootNode extends AbstractArmorySupport {
     @Override
     protected void multiThread(ArmoryCommandEntity requestParameter, DefaultArmoryStrategyFactory.DynamicContext dynamicContext) throws ExecutionException, InterruptedException, TimeoutException {
         // 通过策略加载数据
-        String commandType = requestParameter.getCommandType();
-        log.info("RootNode -- multiThread -- commandType = {}", commandType);
-
-        AiAgentEnumVO aiAgentEnumVO = AiAgentEnumVO.getByCode(commandType);
-        String loadDataStrategyKey = aiAgentEnumVO.getLoadDataStrategy();
-
-        ILoadDataStrategy loadDataStrategy = loadDataStrategyMap.get(loadDataStrategyKey);
+        ILoadDataStrategy loadDataStrategy = loadDataStrategyMap.get(requestParameter.getLoadDataStrategyKey());
 
         loadDataStrategy.loadData(requestParameter, dynamicContext);
     }

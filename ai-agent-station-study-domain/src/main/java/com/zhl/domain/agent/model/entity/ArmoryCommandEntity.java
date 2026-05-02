@@ -1,5 +1,6 @@
 package com.zhl.domain.agent.model.entity;
 
+import com.zhl.domain.agent.model.valobj.AiAgentEnumVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,5 +29,10 @@ public class ArmoryCommandEntity {
      * 命令索引（clientId、modelId、apiId...）
      */
     private List<String> commandIdList;
+
+
+    public String getLoadDataStrategyKey() {
+        return AiAgentEnumVO.getByCode(commandType).getLoadDataStrategy();
+    }
 
 }
