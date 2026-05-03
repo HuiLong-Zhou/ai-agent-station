@@ -3,6 +3,7 @@ package com.zhl.domain.agent.adapter.repository;
 import com.zhl.domain.agent.model.valobj.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -19,6 +20,8 @@ public interface IAgentRepository {
     List<AiClientToolMcpVO> AiClientToolMcpVOByClientIds(List<String> clientIdList);
 
     List<AiClientSystemPromptVO> AiClientSystemPromptVOByClientIds(List<String> clientIdList);
+
+    Map<String, AiClientSystemPromptVO> aiClientSystemPromptMapByClientIds(List<String> clientIdList);
 
     List<AiClientAdvisorVO> AiClientAdvisorVOByClientIds(List<String> clientIdList);
 

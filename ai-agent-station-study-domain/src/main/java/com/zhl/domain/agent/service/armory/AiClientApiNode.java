@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * <p>
- *
+ *  OpenAI API配置节点
  * @author zhl
  * @since 2026-04-29 21:52
  */
@@ -42,19 +42,21 @@ public class AiClientApiNode extends AbstractArmorySupport{
 
         for (AiClientApiVO aiClientApiVO : aiClientApiVOList) {
             // 构建 OpenAiApi
-            OpenAiApi openAiApi = OpenAiApi.builder()
-                .baseUrl(aiClientApiVO.getBaseUrl())
-                .apiKey(aiClientApiVO.getApiKey())
-                .embeddingsPath(aiClientApiVO.getEmbeddingsPath())
-                .completionsPath(aiClientApiVO.getCompletionsPath())
-                .build();
+            OpenAiApi openAiApi = createOpenAiApi(aiClientApiVO);
 
             // 注册 OpenAiApi Bean 对象
             registerBean(beanName(aiClientApiVO.getApiId()), OpenAiApi.class, openAiApi );
-
         }
 
         return router(requestParameter, dynamicContext);
+    }
+
+    private static OpenAiApi createOpenAiApi(AiClientApiVO aiClientApiVO) {
+        return OpenAiApi.builder()
+            .baseUrl(aiClientApiVO.getBaseUrl())
+            .apiKey(aiClientApiVO.getApiKey())
+            .embeddingsPath(aiClientApiVO.getEmbeddingsPath())
+            .completionsPath(aiClientApiVO.getCompletionsPath()).build();
     }
 
     @Override

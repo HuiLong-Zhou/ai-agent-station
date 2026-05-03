@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,5 +55,24 @@ public class AiClientVO {
      */
     private List<String> advisorIdList;
 
+    public String getModelBeanName() {
+        return AiAgentEnumVO.AI_CLIENT_MODEL.getBeanName(modelId);
+    }
+
+    public List<String> getMCPBeanName() {
+        List<String> mcpBeanNames = new ArrayList<>();
+        for (String mcpId : mcpIdList) {
+            mcpBeanNames.add(AiAgentEnumVO.AI_CLIENT_TOOL_MCP.getBeanName(mcpId));
+        }
+        return mcpBeanNames;
+    }
+
+    public List<String> getAdvisorBeanName() {
+        List<String> advisorBeanName = new ArrayList<>();
+        for (String advisorId : advisorIdList) {
+            advisorBeanName.add(AiAgentEnumVO.AI_CLIENT_ADVISOR.getBeanName(advisorId));
+        }
+        return advisorBeanName;
+    }
 }
 
