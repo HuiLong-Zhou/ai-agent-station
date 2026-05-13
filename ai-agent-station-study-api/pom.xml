@@ -9,6 +9,7 @@
 
     <artifactId>ai-agent-station-study-api</artifactId>
 
+
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -17,6 +18,14 @@
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
         </dependency>
     </dependencies>
 

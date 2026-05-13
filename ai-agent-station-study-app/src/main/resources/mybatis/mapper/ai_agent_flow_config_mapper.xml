@@ -44,14 +44,14 @@
         WHERE id = #{id}
     </select>
 
-    <select id="queryByAgentId" parameterType="java.lang.Long" resultMap="AiAgentFlowConfigMap">
+    <select id="queryByAgentId" parameterType="java.lang.String" resultMap="AiAgentFlowConfigMap">
         SELECT id, agent_id, client_id, sequence,  client_name,client_type,create_time
         FROM ai_agent_flow_config
         WHERE agent_id = #{agentId}
         ORDER BY sequence ASC
     </select>
 
-    <select id="queryByClientId" parameterType="java.lang.Long" resultMap="AiAgentFlowConfigMap">
+    <select id="queryByClientId" parameterType="java.lang.String" resultMap="AiAgentFlowConfigMap">
         SELECT id, agent_id, client_id, sequence, client_name,client_type,create_time
         FROM ai_agent_flow_config
         WHERE client_id = #{clientId}

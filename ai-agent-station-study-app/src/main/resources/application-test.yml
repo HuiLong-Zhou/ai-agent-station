@@ -12,6 +12,23 @@ thread:
         block-queue-size: 5000
         policy: CallerRunsPolicy
 
+
+# 简化配置，禁用数据库自动配置
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
+  ai:
+    openai:
+      base-url: https://apis.itedus.cn
+      api-key: sk-uSUkdiiA9t4GsPyyD36959F31f5f4eEb8dB74295E536D701
+    agent:
+      auto-config:
+        enabled: false
+
+
 # 数据库配置
 #spring:
 #  datasource:
