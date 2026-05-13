@@ -1,5 +1,6 @@
 package com.zhl.domain.agent.model.valobj;
 
+import com.zhl.domain.agent.model.valobj.enums.AiAgentEnumVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

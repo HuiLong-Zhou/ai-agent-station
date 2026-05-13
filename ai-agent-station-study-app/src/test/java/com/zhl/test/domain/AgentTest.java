@@ -3,7 +3,7 @@ package com.zhl.test.domain;
 import cn.bugstack.wrench.design.framework.tree.StrategyHandler;
 import com.alibaba.fastjson2.JSON;
 import com.zhl.domain.agent.model.entity.ArmoryCommandEntity;
-import com.zhl.domain.agent.model.valobj.AiAgentEnumVO;
+import com.zhl.domain.agent.model.valobj.enums.AiAgentEnumVO;
 import com.zhl.domain.agent.service.armory.factory.DefaultArmoryStrategyFactory;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;

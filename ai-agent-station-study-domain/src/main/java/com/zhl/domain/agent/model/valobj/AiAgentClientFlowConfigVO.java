@@ -1,0 +1,40 @@
+package com.zhl.domain.agent.model.valobj;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/**
+ * <p>
+ *  客户端配置
+ * @author zhl
+ * @since 2026-05-12 15:25
+ */
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class AiAgentClientFlowConfigVO {
+
+    /**
+     * 客户端ID
+     */
+    private String clientId;
+
+    /**
+     * 客户端名称
+     */
+    private String clientName;
+
+    /**
+     * 客户端枚举
+     */
+    private String clientType;
+
+    /**
+     * 序列号(执行顺序)
+     */
+    private Integer sequence;
+
+}

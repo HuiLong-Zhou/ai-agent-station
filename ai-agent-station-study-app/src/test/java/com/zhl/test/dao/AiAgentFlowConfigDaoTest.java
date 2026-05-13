@@ -29,8 +29,8 @@ public class AiAgentFlowConfigDaoTest {
     @Test
     public void test_insert() {
         AiAgentFlowConfig aiAgentFlowConfig = AiAgentFlowConfig.builder()
-            .agentId(1L)
-            .clientId(3001L)
+            .agentId("1")
+            .clientId("3001")
             .sequence(1)
             .createTime(LocalDateTime.now())
             .build();
@@ -43,8 +43,8 @@ public class AiAgentFlowConfigDaoTest {
     public void test_updateById() {
         AiAgentFlowConfig aiAgentFlowConfig = AiAgentFlowConfig.builder()
             .id(1L)
-            .agentId(1L)
-            .clientId(3002L)
+            .agentId("1")
+            .clientId("3002")
             .sequence(2)
             .build();
 
@@ -60,21 +60,21 @@ public class AiAgentFlowConfigDaoTest {
 
     @Test
     public void test_queryByAgentId() {
-        List<AiAgentFlowConfig> aiAgentFlowConfigs = aiAgentFlowConfigDao.queryByAgentId(1L);
+        List<AiAgentFlowConfig> aiAgentFlowConfigs = aiAgentFlowConfigDao.queryByAgentId("1");
         log.info("根据智能体ID查询结果数量: {}", aiAgentFlowConfigs.size());
         aiAgentFlowConfigs.forEach(config -> log.info("智能体关联配置: {}", config));
     }
 
     @Test
     public void test_queryByClientId() {
-        List<AiAgentFlowConfig> aiAgentFlowConfigs = aiAgentFlowConfigDao.queryByClientId(3001L);
+        List<AiAgentFlowConfig> aiAgentFlowConfigs = aiAgentFlowConfigDao.queryByClientId("3001");
         log.info("根据客户端ID查询结果数量: {}", aiAgentFlowConfigs.size());
         aiAgentFlowConfigs.forEach(config -> log.info("客户端关联配置: {}", config));
     }
 
     @Test
     public void test_queryByAgentIdAndClientId() {
-        AiAgentFlowConfig aiAgentFlowConfig = aiAgentFlowConfigDao.queryByAgentIdAndClientId(1L, 3001L);
+        AiAgentFlowConfig aiAgentFlowConfig = aiAgentFlowConfigDao.queryByAgentIdAndClientId("1", "3001");
         log.info("根据智能体ID和客户端ID查询结果: {}", aiAgentFlowConfig);
     }
 
@@ -93,7 +93,7 @@ public class AiAgentFlowConfigDaoTest {
 
     @Test
     public void test_deleteByAgentId() {
-        int result = aiAgentFlowConfigDao.deleteByAgentId(1L);
+        int result = aiAgentFlowConfigDao.deleteByAgentId("1");
         log.info("根据智能体ID删除结果: {}", result);
     }
 
