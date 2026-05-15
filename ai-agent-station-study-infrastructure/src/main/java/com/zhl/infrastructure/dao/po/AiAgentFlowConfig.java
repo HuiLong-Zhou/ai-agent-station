@@ -35,19 +35,24 @@ public class AiAgentFlowConfig {
     private String clientId;
 
     /**
-     * 序列号(执行顺序)
-     */
-    private Integer sequence;
-
-    /**
      * 客户端名称
      */
     private String clientName;
 
     /**
-     * 客户端类型
+     * 客户端枚举
      */
     private String clientType;
+
+    /**
+     * 序列号(执行顺序)
+     */
+    private Integer sequence;
+
+    /**
+     * 执行步骤提示词
+     */
+    private String stepPrompt;
 
     /**
      * 创建时间
