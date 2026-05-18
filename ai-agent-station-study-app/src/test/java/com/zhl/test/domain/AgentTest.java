@@ -63,11 +63,11 @@ public class AgentTest {
         String apply = armoryStrategyHandler.apply(
             ArmoryCommandEntity.builder()
                 .commandType(AiAgentEnumVO.AI_CLIENT.getCode())
-                .commandIdList(Arrays.asList("3001"))
+                .commandIdList(Arrays.asList("5001"))
                 .build(),
             new DefaultArmoryStrategyFactory.DynamicContext());
 
-        OpenAiChatModel openAiChatModel = (OpenAiChatModel) applicationContext.getBean(AiAgentEnumVO.AI_CLIENT_MODEL.getBeanName("2001"));
+        OpenAiChatModel openAiChatModel = (OpenAiChatModel) applicationContext.getBean(AiAgentEnumVO.AI_CLIENT_MODEL.getBeanName("2004"));
 
         log.info("模型构建:{}", openAiChatModel);
 

@@ -52,6 +52,10 @@ public class OpenAiTest {
     @Value("classpath:data/dog.png")
     private Resource dogPngResource;
 
+
+    @Value("classpath:data/grafana-mcp-tools-guide.md")
+    private Resource grafanaMcpToolsGuideResource;
+
     @Autowired
     private OpenAiChatModel openAiChatModel;
 
@@ -133,15 +137,18 @@ public class OpenAiTest {
     public void testUpload(){
 
 //        TikaDocumentReader documentReader = new TikaDocumentReader(fileTextResource);
-        TikaDocumentReader documentReader = new TikaDocumentReader(articlePromptWordsResource);
+//        TikaDocumentReader documentReader = new TikaDocumentReader(articlePromptWordsResource);
+        TikaDocumentReader documentReader = new TikaDocumentReader(grafanaMcpToolsGuideResource);
 
         List<Document> documents = documentReader.get();
         List<Document> documentSplitterList = tokenTextSplitter.apply(documents);
 
 //        documentSplitterList.forEach(doc -> doc.getMetadata().put("knowledge", "知识库名称-v4"));
 //        documents.forEach(doc -> doc.getMetadata().put("knowledge", "知识库名称-v4"));
-        documentSplitterList.forEach(doc -> doc.getMetadata().put("knowledge", "article-prompt-words"));
-        documents.forEach(doc -> doc.getMetadata().put("knowledge", "article-prompt-words"));
+//        documentSplitterList.forEach(doc -> doc.getMetadata().put("knowledge", "article-prompt-words"));
+//        documents.forEach(doc -> doc.getMetadata().put("knowledge", "article-prompt-words"));
+
+        documentSplitterList.forEach(doc -> doc.getMetadata().put("knowledge", "grafana-mcp-tools-guide"));
 
         pgVectorStore.accept(documentSplitterList);
 
