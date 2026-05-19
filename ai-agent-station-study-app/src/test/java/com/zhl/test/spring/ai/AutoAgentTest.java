@@ -1,6 +1,6 @@
 package com.zhl.test.spring.ai;
 
-import com.zhl.domain.agent.service.armory.factory.element.RagAnswerAdvisor;
+import com.zhl.domain.agent.service.armory.node.factory.element.RagAnswerAdvisor;
 import io.modelcontextprotocol.client.McpClient;
 import io.modelcontextprotocol.client.McpSyncClient;
 import io.modelcontextprotocol.client.transport.HttpClientSseClientTransport;

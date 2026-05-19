@@ -1,7 +1,7 @@
 package com.zhl.domain.agent.service.armory.business.data;
 
 import com.zhl.domain.agent.model.entity.ArmoryCommandEntity;
-import com.zhl.domain.agent.service.armory.factory.DefaultArmoryStrategyFactory;
+import com.zhl.domain.agent.service.armory.node.factory.DefaultArmoryStrategyFactory;
 
 /**
  * <p>

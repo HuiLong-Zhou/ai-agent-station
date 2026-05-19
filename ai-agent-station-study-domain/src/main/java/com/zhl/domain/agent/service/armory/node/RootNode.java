@@ -1,9 +1,9 @@
-package com.zhl.domain.agent.service.armory;
+package com.zhl.domain.agent.service.armory.node;
 
 import cn.bugstack.wrench.design.framework.tree.StrategyHandler;
 import com.zhl.domain.agent.model.entity.ArmoryCommandEntity;
 import com.zhl.domain.agent.service.armory.business.data.ILoadDataStrategy;
-import com.zhl.domain.agent.service.armory.factory.DefaultArmoryStrategyFactory;
+import com.zhl.domain.agent.service.armory.node.factory.DefaultArmoryStrategyFactory;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

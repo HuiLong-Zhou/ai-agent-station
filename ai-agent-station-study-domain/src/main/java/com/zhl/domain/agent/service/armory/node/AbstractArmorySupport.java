@@ -1,9 +1,9 @@
-package com.zhl.domain.agent.service.armory;
+package com.zhl.domain.agent.service.armory.node;
 
 import cn.bugstack.wrench.design.framework.tree.AbstractMultiThreadStrategyRouter;
 import com.zhl.domain.agent.adapter.repository.IAgentRepository;
 import com.zhl.domain.agent.model.entity.ArmoryCommandEntity;
-import com.zhl.domain.agent.service.armory.factory.DefaultArmoryStrategyFactory;
+import com.zhl.domain.agent.service.armory.node.factory.DefaultArmoryStrategyFactory;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

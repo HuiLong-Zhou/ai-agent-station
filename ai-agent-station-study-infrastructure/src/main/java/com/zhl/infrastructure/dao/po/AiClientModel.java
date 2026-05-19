@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class AiClientModel {
 
-
     /**
      * 自增主键ID
      */
@@ -44,6 +43,11 @@ public class AiClientModel {
      * 模型类型：openai、deepseek、claude
      */
     private String modelType;
+
+    /**
+     * 模型用途
+     */
+    private String modelUsage;
 
     /**
      * 状态：0-禁用，1-启用

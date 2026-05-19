@@ -1,4 +1,4 @@
-package com.zhl.domain.agent.service.armory;
+package com.zhl.domain.agent.service.armory.node;
 
 import cn.bugstack.wrench.design.framework.tree.StrategyHandler;
 import com.alibaba.fastjson2.JSON;
@@ -6,7 +6,7 @@ import com.zhl.domain.agent.model.entity.ArmoryCommandEntity;
 import com.zhl.domain.agent.model.valobj.enums.AiAgentEnumVO;
 import com.zhl.domain.agent.model.valobj.enums.AiClientAdvisorTypeEnumVO;
 import com.zhl.domain.agent.model.valobj.AiClientAdvisorVO;
-import com.zhl.domain.agent.service.armory.factory.DefaultArmoryStrategyFactory;
+import com.zhl.domain.agent.service.armory.node.factory.DefaultArmoryStrategyFactory;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.advisor.api.Advisor;

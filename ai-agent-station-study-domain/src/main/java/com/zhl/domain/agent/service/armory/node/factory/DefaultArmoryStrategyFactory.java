@@ -1,8 +1,8 @@
-package com.zhl.domain.agent.service.armory.factory;
+package com.zhl.domain.agent.service.armory.node.factory;
 
 import cn.bugstack.wrench.design.framework.tree.StrategyHandler;
 import com.zhl.domain.agent.model.entity.ArmoryCommandEntity;
-import com.zhl.domain.agent.service.armory.RootNode;
+import com.zhl.domain.agent.service.armory.node.RootNode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

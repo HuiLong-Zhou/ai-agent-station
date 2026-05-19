@@ -1,10 +1,9 @@
 package com.zhl.config;
 
-import cn.bugstack.wrench.design.framework.tree.StrategyHandler;
-import com.zhl.domain.agent.model.entity.ArmoryCommandEntity;
-import com.zhl.domain.agent.model.valobj.enums.AiAgentEnumVO;
-import com.zhl.domain.agent.service.armory.factory.DefaultArmoryStrategyFactory;
-import com.zhl.types.common.Constants;
+import com.alibaba.fastjson2.JSON;
+import com.zhl.domain.agent.model.valobj.AiAgentVO;
+import com.zhl.domain.agent.service.IArmoryService;
+import com.zhl.domain.agent.service.armory.node.factory.DefaultArmoryStrategyFactory;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -12,11 +11,8 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.CollectionUtils;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -37,6 +33,9 @@ public class AiAgentAutoConfiguration implements ApplicationListener<Application
     @Resource
     private DefaultArmoryStrategyFactory defaultArmoryStrategyFactory;
 
+    @Resource
+    private IArmoryService armoryService;
+
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         try {
@@ -48,39 +47,9 @@ public class AiAgentAutoConfiguration implements ApplicationListener<Application
                 return;
             }
 
-            List<String> clientIds = aiAgentAutoConfigProperties.getClientIds();
-            if (CollectionUtils.isEmpty(clientIds)) {
-                log.warn("AI Agent 自动装配配置的客户端ID列表为空");
-                return;
-            }
+            List<AiAgentVO> aiAgentVOS = armoryService.acceptArmoryAllAvailableAgents();
 
-            // 解析客户端ID列表（支持逗号分隔的字符串）
-            List<String> commandIdList;
-            if (clientIds.size() == 1 && clientIds.get(0).contains(Constants.SPLIT)) {
-                // 处理逗号分隔的字符串
-                commandIdList = Arrays.stream(clientIds.get(0).split(Constants.SPLIT))
-                    .map(String::trim)
-                    .filter(id -> !id.isEmpty())
-                    .collect(Collectors.toList());
-            } else {
-                commandIdList = clientIds;
-            }
-
-            log.info("开始自动装配AI客户端，客户端ID列表: {}", commandIdList);
-
-            // 执行自动装配
-            StrategyHandler<ArmoryCommandEntity, DefaultArmoryStrategyFactory.DynamicContext, String> armoryStrategyHandler =
-                defaultArmoryStrategyFactory.strategyHandler();
-
-            String result = armoryStrategyHandler.apply(
-                ArmoryCommandEntity.builder()
-                    .commandType(AiAgentEnumVO.AI_CLIENT.getCode())
-                    .commandIdList(commandIdList)
-                    .build(),
-                new DefaultArmoryStrategyFactory.DynamicContext());
-
-            log.info("AI Agent 自动装配完成，结果: {}", result);
-
+            log.info("AI Agent 自动装配完成 {}", JSON.toJSONString(aiAgentVOS));
         } catch (Exception e) {
             log.error("AI Agent 自动装配失败", e);
         }

@@ -1,4 +1,4 @@
-package com.zhl.domain.agent.service.armory.factory.element;
+package com.zhl.domain.agent.service.armory.node.factory.element;
 
 import com.alibaba.fastjson2.JSON;
 import org.springframework.ai.chat.client.ChatClientRequest;
