@@ -4,7 +4,7 @@ import com.zhl.domain.agent.adapter.repository.IAgentRepository;
 import com.zhl.domain.agent.model.entity.ExecuteCommandEntity;
 import com.zhl.domain.agent.model.valobj.AiAgentVO;
 import com.zhl.domain.agent.service.IAgentDispatchService;
-import com.zhl.domain.agent.service.execute.IExecuteStrategy;
+import com.zhl.domain.agent.service.IExecuteStrategy;
 import com.zhl.types.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

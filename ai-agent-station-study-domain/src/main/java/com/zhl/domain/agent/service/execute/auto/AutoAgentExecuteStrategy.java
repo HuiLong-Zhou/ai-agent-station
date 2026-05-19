@@ -4,7 +4,7 @@ import cn.bugstack.wrench.design.framework.tree.StrategyHandler;
 import com.alibaba.fastjson2.JSON;
 import com.zhl.domain.agent.model.entity.AutoAgentExecuteResultEntity;
 import com.zhl.domain.agent.model.entity.ExecuteCommandEntity;
-import com.zhl.domain.agent.service.execute.IExecuteStrategy;
+import com.zhl.domain.agent.service.IExecuteStrategy;
 import com.zhl.domain.agent.service.execute.auto.step.factory.DefaultAutoAgentExecuteStrategyFactory;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;

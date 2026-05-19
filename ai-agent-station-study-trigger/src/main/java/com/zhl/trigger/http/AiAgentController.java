@@ -5,7 +5,7 @@ import com.zhl.api.IAiAgentService;
 import com.zhl.api.dto.AutoAgentRequestDTO;
 import com.zhl.domain.agent.model.entity.ExecuteCommandEntity;
 import com.zhl.domain.agent.service.IAgentDispatchService;
-import com.zhl.domain.agent.service.execute.IExecuteStrategy;
+import com.zhl.domain.agent.service.IExecuteStrategy;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
