@@ -44,6 +44,12 @@ public class AiAgent {
      * 渠道类型(agent，chat_stream)
      */
     private String channel;
+    
+    /**
+     * 执行策略(auto、flow)
+     */
+    private String strategy;
+
 
     /**
      * 状态(0:禁用,1:启用)

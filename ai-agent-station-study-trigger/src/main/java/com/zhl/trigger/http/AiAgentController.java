@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.zhl.api.IAiAgentService;
 import com.zhl.api.dto.AutoAgentRequestDTO;
 import com.zhl.domain.agent.model.entity.ExecuteCommandEntity;
+import com.zhl.domain.agent.service.IAgentDispatchService;
 import com.zhl.domain.agent.service.execute.IExecuteStrategy;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
@@ -31,6 +32,9 @@ public class AiAgentController implements IAiAgentService {
     @Resource
     private ThreadPoolExecutor threadPoolExecutor;
 
+    @Resource
+    private IAgentDispatchService agentDispatchService;
+
     @RequestMapping(value = "auto_agent", method = RequestMethod.POST)
     public ResponseBodyEmitter autoAgent(@RequestBody AutoAgentRequestDTO request, HttpServletResponse response) {
         log.info("AutoAgent流式执行请求开始，请求信息：{}", JSON.toJSONString(request));
@@ -53,25 +57,8 @@ public class AiAgentController implements IAiAgentService {
                 .maxStep(request.getMaxStep())
                 .build();
 
-            // 3. 异步执行AutoAgent
-            threadPoolExecutor.execute(() -> {
-                try {
-                    autoAgentExecuteStrategy.execute(executeCommandEntity, emitter);
-                } catch (Exception e) {
-                    log.error("AutoAgent执行异常：{}", e.getMessage(), e);
-                    try {
-                        emitter.send("执行异常：" + e.getMessage());
-                    } catch (Exception ex) {
-                        log.error("发送异常信息失败：{}", ex.getMessage(), ex);
-                    }
-                } finally {
-                    try {
-                        emitter.complete();
-                    } catch (Exception e) {
-                        log.error("完成流式输出失败：{}", e.getMessage(), e);
-                    }
-                }
-            });
+            // 3. 调度处理
+            agentDispatchService.dispatch(executeCommandEntity, emitter);
 
             return emitter;
 
