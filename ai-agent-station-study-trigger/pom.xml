@@ -46,6 +46,10 @@
             <groupId>com.zhl</groupId>
             <artifactId>ai-agent-station-study-domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.zhl</groupId>
+            <artifactId>ai-agent-station-study-infrastructure</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
