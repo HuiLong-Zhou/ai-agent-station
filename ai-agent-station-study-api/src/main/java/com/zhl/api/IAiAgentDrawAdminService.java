@@ -2,7 +2,12 @@ package com.zhl.api;
 
 import com.zhl.api.dto.AiAgentDrawConfigRequestDTO;
 import com.zhl.api.dto.AiAgentDrawConfigResponseDTO;
+import com.zhl.api.dto.AiAgentListResponseDTO;
+import com.zhl.api.dto.AiAgentQueryRequestDTO;
 import com.zhl.api.response.Response;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 /**
  * AI智能体拖拉拽配置管理服务接口
@@ -19,6 +24,13 @@ public interface IAiAgentDrawAdminService {
      * @return 保存结果
      */
     Response<String> saveDrawConfig(AiAgentDrawConfigRequestDTO request);
+
+    /**
+     * 查询代理列表
+     * @param request   查询条件
+     * @return  Ai Agent 列表
+     */
+    Response<List<AiAgentListResponseDTO>> queryAiAgentList(AiAgentQueryRequestDTO request);
 
     /**
      * 获取拖拉拽流程图配置

@@ -4,17 +4,13 @@ package com.zhl.trigger.http.admin;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zhl.api.IAiAgentDrawAdminService;
-import com.zhl.api.dto.AiAgentDrawConfigRequestDTO;
-import com.zhl.api.dto.AiAgentDrawConfigResponseDTO;
+import com.zhl.api.dto.*;
 import com.zhl.api.response.Response;
 import com.zhl.infrastructure.dao.IAiAgentDao;
 import com.zhl.infrastructure.dao.IAiAgentDrawConfigDao;
 import com.zhl.infrastructure.dao.IAiAgentFlowConfigDao;
 import com.zhl.infrastructure.dao.IAiClientConfigDao;
-import com.zhl.infrastructure.dao.po.AiAgent;
-import com.zhl.infrastructure.dao.po.AiAgentDrawConfig;
-import com.zhl.infrastructure.dao.po.AiAgentFlowConfig;
-import com.zhl.infrastructure.dao.po.AiClientConfig;
+import com.zhl.infrastructure.dao.po.*;
 import com.zhl.trigger.http.admin.util.DrawConfigParser;
 import com.zhl.types.enums.ResponseCode;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * 拖拉拽
@@ -137,20 +134,20 @@ public class AiAgentDrawAdminController implements IAiAgentDrawAdminService {
                         for (AiClientConfig config : configRelations) {
                             // 检查是否已经存在相同的记录
                             List<AiClientConfig> existingConfigs = aiClientConfigDao.queryByConditions(
-                                config.getSourceType(), 
-                                config.getSourceId(), 
-                                config.getTargetType(), 
+                                config.getSourceType(),
+                                config.getSourceId(),
+                                config.getTargetType(),
                                 config.getTargetId()
                             );
-                            
+
                             if (existingConfigs.isEmpty()) {
                                 // 设置扩展参数，记录来源配置ID
                                 config.setExtParam("{\"configId\":\"" + configId + "\"}");
                                 aiClientConfigDao.insert(config);
-                                log.debug("插入新的配置关系: sourceType={}, sourceId={}, targetType={}, targetId={}", 
+                                log.debug("插入新的配置关系: sourceType={}, sourceId={}, targetType={}, targetId={}",
                                     config.getSourceType(), config.getSourceId(), config.getTargetType(), config.getTargetId());
                             } else {
-                                log.debug("配置关系已存在，跳过插入: sourceType={}, sourceId={}, targetType={}, targetId={}", 
+                                log.debug("配置关系已存在，跳过插入: sourceType={}, sourceId={}, targetType={}, targetId={}",
                                     config.getSourceType(), config.getSourceId(), config.getTargetType(), config.getTargetId());
                             }
                         }
@@ -228,7 +225,7 @@ public class AiAgentDrawAdminController implements IAiAgentDrawAdminService {
                             JsonNode inputsValuesNode = dataNode.get("inputsValues");
                             if (inputsValuesNode != null) {
                                 log.debug("开始解析agent节点的inputsValues: {}", inputsValuesNode.toString());
-                                
+
                                 // 提取agent信息
                                 String agentName = extractValueFromInputs(inputsValuesNode, "agentName");
                                 String description = extractValueFromInputs(inputsValuesNode, "description");
@@ -240,7 +237,7 @@ public class AiAgentDrawAdminController implements IAiAgentDrawAdminService {
                                 agentInfo[2] = channel != null ? channel : "";
                                 agentInfo[3] = strategy != null ? strategy : "";
 
-                                log.info("解析到agent信息: agentName={}, description={}, channel={}, strategy={}", 
+                                log.info("解析到agent信息: agentName={}, description={}, channel={}, strategy={}",
                                         agentName, description, channel, strategy);
                                 break; // 找到第一个agent节点就退出
                             }
@@ -325,7 +322,7 @@ public class AiAgentDrawAdminController implements IAiAgentDrawAdminService {
     private String extractValueFromInputs(JsonNode inputsValuesNode, String fieldName) {
         JsonNode fieldNode = inputsValuesNode.get(fieldName);
         log.debug("提取字段 '{}': fieldNode={}", fieldName, fieldNode != null ? fieldNode.toString() : "null");
-        
+
         if (fieldNode != null) {
             // 处理数组格式：[{"key": "xxx", "value": "yyy"}] 或 [{"key": "xxx", "value": {"content": "yyy"}}]
             if (fieldNode.isArray() && !fieldNode.isEmpty()) {
@@ -333,7 +330,7 @@ public class AiAgentDrawAdminController implements IAiAgentDrawAdminService {
                 if (firstItem != null) {
                     JsonNode valueNode = firstItem.get("value");
                     log.debug("字段 '{}' 数组格式，valueNode={}", fieldName, valueNode != null ? valueNode.toString() : "null");
-                    
+
                     if (valueNode != null) {
                         // 如果value是对象，尝试获取content字段
                         if (valueNode.isObject()) {
@@ -366,7 +363,7 @@ public class AiAgentDrawAdminController implements IAiAgentDrawAdminService {
                 return result;
             }
         }
-        
+
         log.debug("字段 '{}' 未找到有效值", fieldName);
         return null;
     }
@@ -415,6 +412,61 @@ public class AiAgentDrawAdminController implements IAiAgentDrawAdminService {
             }
         }
         return null;
+    }
+
+    @Override
+    @PostMapping("/query-list")
+    public Response<List<AiAgentListResponseDTO>> queryAiAgentList(@RequestBody AiAgentQueryRequestDTO request) {
+        try {
+            log.info("根据条件查询AI Agent列表请求：{}", request);
+
+            List<AiAgentDrawConfig> aiAgentDrawConfigs;
+
+            // 根据不同条件查询
+            if (StringUtils.hasText(request.getAgentId())) {
+                AiAgentDrawConfig aiAgentDrawConfig = aiAgentDrawConfigDao.queryByAgentId(request.getAgentId());
+                aiAgentDrawConfigs = aiAgentDrawConfig != null ? List.of(aiAgentDrawConfig) : List.of();
+            } else if (StringUtils.hasText(request.getConfigName())) {
+                aiAgentDrawConfigs = aiAgentDrawConfigDao.queryByConfigName(request.getConfigName());
+            } else {
+                aiAgentDrawConfigs = aiAgentDrawConfigDao.queryAll();
+            }
+
+            // 状态过滤
+            if (request.getStatus() != null) {
+                aiAgentDrawConfigs = aiAgentDrawConfigs.stream()
+                    .filter(agent -> request.getStatus().equals(agent.getStatus()))
+                    .collect(Collectors.toList());
+            }
+
+            // 分页处理（简单实现）
+            if (request.getPageNum() != null && request.getPageSize() != null) {
+                int start = (request.getPageNum() - 1) * request.getPageSize();
+                int end = Math.min(start + request.getPageSize(), aiAgentDrawConfigs.size());
+                if (start < aiAgentDrawConfigs.size()) {
+                    aiAgentDrawConfigs = aiAgentDrawConfigs.subList(start, end);
+                } else {
+                    aiAgentDrawConfigs = List.of();
+                }
+            }
+
+            List<AiAgentListResponseDTO> responseDTOs = aiAgentDrawConfigs.stream()
+                .map(this::convertToAiAgentListResponseDTO)
+                .collect(Collectors.toList());
+
+            return Response.<List<AiAgentListResponseDTO>>builder()
+                .code(ResponseCode.SUCCESS.getCode())
+                .info(ResponseCode.SUCCESS.getInfo())
+                .data(responseDTOs)
+                .build();
+        } catch (Exception e) {
+            log.error("根据条件查询AI Agent配置列表失败", e);
+            return Response.<List<AiAgentListResponseDTO>>builder()
+                .code(ResponseCode.UN_ERROR.getCode())
+                .info(ResponseCode.UN_ERROR.getInfo())
+                .data(null)
+                .build();
+        }
     }
 
     @Override
@@ -493,4 +545,15 @@ public class AiAgentDrawAdminController implements IAiAgentDrawAdminService {
                     .build();
         }
     }
+
+
+    /**
+     * PO转DTO对象
+     */
+    private AiAgentListResponseDTO convertToAiAgentListResponseDTO(AiAgentDrawConfig aiAgentDrawConfig) {
+        AiAgentListResponseDTO responseDTO = new AiAgentListResponseDTO();
+        BeanUtils.copyProperties(aiAgentDrawConfig, responseDTO);
+        return responseDTO;
+    }
+
 }
