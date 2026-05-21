@@ -39,7 +39,27 @@ public class AdminUserAdminController implements IAdminUserAdminService {
     public Response<Boolean> createAdminUser(@RequestBody AdminUserRequestDTO request) {
         try {
             log.info("创建管理员用户请求：{}", request);
-            
+
+            // 1. 参数校验
+            if (request.getUsername() == null) {
+                throw new RuntimeException("用户名不能为空");
+            }
+
+            if (request.getPassword() == null) {
+                throw new RuntimeException("密码不能为空");
+            }
+
+            // 2. 查询用户名是否已存在
+            AdminUser existUser = adminUserDao.queryByUsername(request.getUsername());
+
+            if (existUser != null) {
+                throw new RuntimeException("用户名已存在");
+            }
+
+            String userId = String.format("%08d", System.currentTimeMillis() % 100000000L);
+            request.setUserId(userId);
+            request.setStatus(1);
+
             // DTO转PO
             AdminUser adminUser = convertToAdminUser(request);
             adminUser.setCreateTime(LocalDateTime.now());
