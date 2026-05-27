@@ -1,11 +1,10 @@
-package com.zhl.api;
+package com.zhl.api.service;
 
 import com.zhl.api.dto.AiAgentDrawConfigRequestDTO;
 import com.zhl.api.dto.AiAgentDrawConfigResponseDTO;
 import com.zhl.api.dto.AiAgentListResponseDTO;
 import com.zhl.api.dto.AiAgentQueryRequestDTO;
 import com.zhl.api.response.Response;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 

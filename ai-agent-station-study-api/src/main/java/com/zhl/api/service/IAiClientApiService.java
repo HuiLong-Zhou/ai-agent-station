@@ -1,9 +1,8 @@
-package com.zhl.api;
+package com.zhl.api.service;
 
 import com.zhl.api.dto.AiClientApiQueryRequestDTO;
 import com.zhl.api.dto.AiClientApiRequestDTO;
 import com.zhl.api.dto.AiClientApiResponseDTO;
-import com.zhl.api.dto.AiClientRequestDTO;
 import com.zhl.api.response.Response;
 
 import java.util.List;

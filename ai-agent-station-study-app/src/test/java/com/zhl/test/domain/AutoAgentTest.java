@@ -61,7 +61,8 @@ public class AutoAgentTest {
 
         ExecuteCommandEntity executeCommandEntity = new ExecuteCommandEntity();
         executeCommandEntity.setAiAgentId("3");
-        executeCommandEntity.setMessage("搜索小傅哥，技术项目列表。编写成一份文档，说明不同项目的学习目标，以及不同阶段的伙伴应该学习哪个项目。");
+//        executeCommandEntity.setMessage("搜索小傅哥，技术项目列表。编写成一份文档，说明不同项目的学习目标，以及不同阶段的伙伴应该学习哪个项目。");
+        executeCommandEntity.setMessage("郑州今天天气怎么样？适合穿什么衣服？");
         executeCommandEntity.setSessionId("session-id-" + System.currentTimeMillis());
         executeCommandEntity.setMaxStep(3);
 

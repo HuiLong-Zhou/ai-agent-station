@@ -1,6 +1,6 @@
 package com.zhl.trigger.http.admin;
 
-import com.zhl.api.IAiClientAdminService;
+import com.zhl.api.service.IAiClientAdminService;
 import com.zhl.api.dto.AiClientQueryRequestDTO;
 import com.zhl.api.dto.AiClientRequestDTO;
 import com.zhl.api.dto.AiClientResponseDTO;

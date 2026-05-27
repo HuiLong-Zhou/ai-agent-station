@@ -3,7 +3,7 @@ package com.zhl.trigger.http.admin;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zhl.api.IAiAgentDrawAdminService;
+import com.zhl.api.service.IAiAgentDrawAdminService;
 import com.zhl.api.dto.*;
 import com.zhl.api.response.Response;
 import com.zhl.infrastructure.dao.IAiAgentDao;

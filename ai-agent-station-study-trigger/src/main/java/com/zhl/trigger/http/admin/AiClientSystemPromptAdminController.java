@@ -1,6 +1,6 @@
 package com.zhl.trigger.http.admin;
 
-import com.zhl.api.IAiClientSystemPromptAdminService;
+import com.zhl.api.service.IAiClientSystemPromptAdminService;
 import com.zhl.api.dto.AiClientSystemPromptQueryRequestDTO;
 import com.zhl.api.dto.AiClientSystemPromptRequestDTO;
 import com.zhl.api.dto.AiClientSystemPromptResponseDTO;

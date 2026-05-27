@@ -1,6 +1,6 @@
 package com.zhl.trigger.http.admin;
 
-import com.zhl.api.IAiClientRagOrderAdminService;
+import com.zhl.api.service.IAiClientRagOrderAdminService;
 import com.zhl.api.dto.AiClientRagOrderQueryRequestDTO;
 import com.zhl.api.dto.AiClientRagOrderRequestDTO;
 import com.zhl.api.dto.AiClientRagOrderResponseDTO;

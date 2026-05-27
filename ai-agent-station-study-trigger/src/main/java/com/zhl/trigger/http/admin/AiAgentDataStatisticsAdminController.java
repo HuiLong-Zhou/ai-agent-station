@@ -1,6 +1,6 @@
 package com.zhl.trigger.http.admin;
 
-import com.zhl.api.IAiAgentDataStatisticsAdminService;
+import com.zhl.api.service.IAiAgentDataStatisticsAdminService;
 import com.zhl.api.dto.DataStatisticsResponseDTO;
 import com.zhl.api.response.Response;
 import com.zhl.infrastructure.dao.*;

@@ -1,7 +1,7 @@
 package com.zhl.trigger.http;
 
 import com.alibaba.fastjson2.JSON;
-import com.zhl.api.IAiAgentService;
+import com.zhl.api.service.IAiAgentService;
 import com.zhl.api.dto.AiAgentResponseDTO;
 import com.zhl.api.dto.ArmoryAgentRequestDTO;
 import com.zhl.api.dto.AutoAgentRequestDTO;

@@ -1,6 +1,6 @@
 package com.zhl.trigger.http.admin;
 
-import com.zhl.api.IAdminUserAdminService;
+import com.zhl.api.service.IAdminUserAdminService;
 import com.zhl.api.dto.AdminUserLoginRequestDTO;
 import com.zhl.api.dto.AdminUserQueryRequestDTO;
 import com.zhl.api.dto.AdminUserRequestDTO;
