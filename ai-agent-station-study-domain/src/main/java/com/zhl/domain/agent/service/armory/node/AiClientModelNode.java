@@ -6,10 +6,10 @@ import com.zhl.domain.agent.model.entity.ArmoryCommandEntity;
 import com.zhl.domain.agent.model.valobj.enums.AiAgentEnumVO;
 import com.zhl.domain.agent.model.valobj.AiClientModelVO;
 import com.zhl.domain.agent.service.armory.node.factory.DefaultArmoryStrategyFactory;
+import com.zhl.domain.agent.service.security.McpSecuredToolCallbackFactory;
 import io.modelcontextprotocol.client.McpSyncClient;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.ai.openai.api.OpenAiApi;
@@ -30,6 +30,9 @@ public class AiClientModelNode extends AbstractArmorySupport{
 
     @Resource
     private AiClientAdvisorNode aiClientAdvisorNode;
+
+    @Resource
+    private McpSecuredToolCallbackFactory mcpSecuredToolCallbackFactory;
 
     @Override
     protected String doApply(ArmoryCommandEntity requestParameter, DefaultArmoryStrategyFactory.DynamicContext dynamicContext) throws Exception {
@@ -67,7 +70,10 @@ public class AiClientModelNode extends AbstractArmorySupport{
                 .defaultOptions(
                     OpenAiChatOptions.builder()
                         .model(aiClientModelVO.getModelName())
-                        .toolCallbacks(new SyncMcpToolCallbackProvider(mcpSyncClients).getToolCallbacks())
+                        .toolCallbacks(mcpSecuredToolCallbackFactory.wrap(
+                            requestParameter.getAgentId(),
+                            aiClientModelVO.getToolMcpIds(),
+                            mcpSyncClients))
                         .build()
                 ).build();
 

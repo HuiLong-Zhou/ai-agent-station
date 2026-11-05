@@ -21,6 +21,11 @@ import java.util.List;
 public class ArmoryCommandEntity {
 
     /**
+     * 当前正在装配的 Agent ID
+     */
+    private String agentId;
+
+    /**
      * 命令类型
      */
     private String commandType;

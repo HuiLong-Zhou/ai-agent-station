@@ -48,6 +48,8 @@ public class AiClientModelRequestDTO implements Serializable {
      */
     private String modelType;
 
+    private String modelUsage;
+
     /**
      * 状态：0-禁用，1-启用
      */

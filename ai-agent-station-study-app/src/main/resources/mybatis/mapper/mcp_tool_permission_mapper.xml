@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhl.infrastructure.dao.IMcpToolPermissionDao">
+
+    <resultMap id="McpToolPermissionMap"
+               type="com.zhl.infrastructure.dao.po.McpToolPermission">
+        <id column="id" property="id"/>
+        <result column="agent_id" property="agentId"/>
+        <result column="mcp_id" property="mcpId"/>
+        <result column="tool_name" property="toolName"/>
+        <result column="permission" property="permission"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="queryPermission" resultMap="McpToolPermissionMap">
+        SELECT id, agent_id, mcp_id, tool_name, permission, create_time, update_time
+        FROM agent_mcp_tool_permission
+        WHERE (agent_id = #{agentId} OR agent_id = '*')
+          AND (mcp_id = #{mcpId} OR mcp_id = '*')
+          AND (tool_name = #{toolName} OR tool_name = '*')
+        ORDER BY
+          (agent_id = #{agentId}) DESC,
+          (mcp_id = #{mcpId}) DESC,
+          (tool_name = #{toolName}) DESC
+        LIMIT 1
+    </select>
+
+</mapper>

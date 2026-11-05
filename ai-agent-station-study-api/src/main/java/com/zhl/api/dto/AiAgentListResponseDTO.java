@@ -38,7 +38,7 @@ public class AiAgentListResponseDTO  implements Serializable {
     /**
      * 配置名称
      */
-    private String agentName;
+    private String configName;
 
     /**
      * 描述

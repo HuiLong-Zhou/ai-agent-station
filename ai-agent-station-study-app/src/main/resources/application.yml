@@ -3,3 +3,16 @@ spring:
     name: ai-agent-station-study-app
   profiles:
     active: dev
+
+huilian:
+  mcp:
+    security:
+      # Keep disabled until MCP_JWT_SECRET and protected MCP ids are configured.
+      enabled: false
+      issuer: huilian-agent
+      audience: mcp-gateway
+      secret: ${MCP_JWT_SECRET:}
+      token-ttl-seconds: 3600
+      protected-mcp-ids: []
+      allowed-hosts: []
+      allowed-stdio-commands: []

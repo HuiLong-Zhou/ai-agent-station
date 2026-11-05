@@ -55,6 +55,7 @@ public class ArmoryService implements IArmoryService {
 
             armoryStrategyHandler.apply(
                 ArmoryCommandEntity.builder()
+                    .agentId(agentId)
                     .commandType(AiAgentEnumVO.AI_CLIENT.getCode())
                     .commandIdList(commandIdList)
                     .build(),

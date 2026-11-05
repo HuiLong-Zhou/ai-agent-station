@@ -6,11 +6,12 @@ import com.zhl.domain.agent.model.entity.ArmoryCommandEntity;
 import com.zhl.domain.agent.model.valobj.*;
 import com.zhl.domain.agent.model.valobj.enums.AiAgentEnumVO;
 import com.zhl.domain.agent.service.armory.node.factory.DefaultArmoryStrategyFactory;
+import com.zhl.domain.agent.service.security.McpSecuredToolCallbackFactory;
 import io.modelcontextprotocol.client.McpSyncClient;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.api.Advisor;
-import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,9 @@ import java.util.Map;
 @Slf4j
 @Service
 public class AiClientNode extends AbstractArmorySupport{
+
+    @Resource
+    private McpSecuredToolCallbackFactory mcpSecuredToolCallbackFactory;
 
     @Override
     protected String doApply(ArmoryCommandEntity requestParameter, DefaultArmoryStrategyFactory.DynamicContext dynamicContext) throws Exception {
@@ -72,7 +76,10 @@ public class AiClientNode extends AbstractArmorySupport{
             // 5. 构建对话客户端
             ChatClient chatClient = ChatClient.builder(chatModel)
                 .defaultSystem(defaultSystem.toString())
-                .defaultToolCallbacks(new SyncMcpToolCallbackProvider(mcpSyncClients.toArray(new McpSyncClient[]{})))
+                .defaultToolCallbacks(mcpSecuredToolCallbackFactory.wrap(
+                    requestParameter.getAgentId(),
+                    aiClientVO.getMcpIdList(),
+                    mcpSyncClients))
                 .defaultAdvisors(advisorArray)
                 .build();
 
