@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 /**
  * <p>
  * 任务调度作业
- * 定时获取有效的任务调度配置，并动态创建新的任务
+ * 定时刷新任务和清理无效任务。
  * @author zhl
  * @since 2026-05-19 21:39
  */

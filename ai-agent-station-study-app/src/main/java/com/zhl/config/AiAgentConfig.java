@@ -51,6 +51,10 @@ public class AiAgentConfig {
             .build();
     }
 
+    /**
+     * 在分词策略上，使用TokenTextSplitter按照token数量进行智能分割
+     * 既保证了语义的完整性又控制了向量的维度
+     */
     @Bean
     public TokenTextSplitter tokenTextSplitter() {
         return new TokenTextSplitter();

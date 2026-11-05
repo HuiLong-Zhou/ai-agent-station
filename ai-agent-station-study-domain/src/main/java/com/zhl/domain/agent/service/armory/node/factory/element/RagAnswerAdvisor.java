@@ -37,10 +37,13 @@ public class RagAnswerAdvisor implements BaseAdvisor {
         this.userTextAdvise = "\nContext information is below, surrounded by ---------------------\n\n---------------------\n{question_answer_context}\n---------------------\n\nGiven the context and provided history information and not prior knowledge,\nreply to the user comment. If the answer is not in the context, inform\nthe user that you can't answer the question.\n";
     }
 
+    /**
+     * 请求前：检索 + 拼上下文信息
+     */
     @Override
     public ChatClientRequest before(ChatClientRequest chatClientRequest, AdvisorChain advisorChain) {
         HashMap<String, Object> context = new HashMap(chatClientRequest.context());
-
+        // 用户原始问题
         String userText = chatClientRequest.prompt().getUserMessage().getText();
         String advisedUserText = userText + System.lineSeparator() + this.userTextAdvise;
 
@@ -60,6 +63,9 @@ public class RagAnswerAdvisor implements BaseAdvisor {
             .build();
     }
 
+    /**
+     * 响应后：更新记忆状态
+     */
     @Override
     public ChatClientResponse after(ChatClientResponse chatClientResponse, AdvisorChain advisorChain) {
         ChatResponse.Builder chatResponseBuilder = ChatResponse.builder().from(chatClientResponse.chatResponse());

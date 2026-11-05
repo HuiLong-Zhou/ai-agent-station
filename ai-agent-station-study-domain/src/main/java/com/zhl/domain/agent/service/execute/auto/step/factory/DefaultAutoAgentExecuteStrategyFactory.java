@@ -15,12 +15,13 @@ import java.util.Map;
 
 /**
  * <p>
- *  工厂类
+ *  自动执行策略工厂类
  * @author zhl
  * @since 2026-05-12 15:16
  */
 @Service
 public class DefaultAutoAgentExecuteStrategyFactory {
+
     private final RootNode executeRootNode;
 
     public DefaultAutoAgentExecuteStrategyFactory(RootNode executeRootNode) {

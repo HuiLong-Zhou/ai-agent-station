@@ -35,7 +35,7 @@ public class FlowAgentMCPTest {
         OpenAiChatModel chatModel = OpenAiChatModel.builder()
             .openAiApi(OpenAiApi.builder()
                 .baseUrl("https://apis.itedus.cn")
-                .apiKey("sk-uSUkdiiA9t4GsPyyD36959F31f5f4eEb8dB74295E536D701")
+                .apiKey("sk-l7mUtN4h3R9opgad7f0dCa68FfA545B79eA03aB9E6D16dCd")
                 .completionsPath("v1/chat/completions")
                 .embeddingsPath("v1/embeddings")
                 .build())

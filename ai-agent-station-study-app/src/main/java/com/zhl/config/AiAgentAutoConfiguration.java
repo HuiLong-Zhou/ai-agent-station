@@ -47,6 +47,7 @@ public class AiAgentAutoConfiguration implements ApplicationListener<Application
                 return;
             }
 
+            // 启动时全量装配
             List<AiAgentVO> aiAgentVOS = armoryService.acceptArmoryAllAvailableAgents();
 
             log.info("AI Agent 自动装配完成 {}", JSON.toJSONString(aiAgentVOS));

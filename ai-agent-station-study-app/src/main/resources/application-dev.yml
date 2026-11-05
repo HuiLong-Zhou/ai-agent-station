@@ -45,7 +45,7 @@ spring:
     # 后续可将 openai 替换为 deepseek 或 本地部署的 ollama
     openai:
       base-url: https://apis.itedus.cn
-      api-key: sk-uSUkdiiA9t4GsPyyD36959F31f5f4eEb8dB74295E536D701    # 已购买 临时的 api-key 见网址 https://openai.itedus.cn/#/setting
+      api-key: sk-l7mUtN4h3R9opgad7f0dCa68FfA545B79eA03aB9E6D16dCd    # 已购买 临时的 api-key 见网址 https://openai.itedus.cn/#/setting
 #      embedding:
 #        options:
 #          model: text-embedding-3-small

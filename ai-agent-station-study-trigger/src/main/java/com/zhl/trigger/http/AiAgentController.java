@@ -94,7 +94,7 @@ public class AiAgentController implements IAiAgentService {
                     .build();
             }
 
-            // 调用装配服务
+            // 手动刷新装载服务
             armoryService.acceptArmoryAgent(request.getAgentId());
 
             log.info("装配智能体成功，agentId：{}", request.getAgentId());

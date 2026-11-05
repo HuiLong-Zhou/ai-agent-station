@@ -69,7 +69,7 @@ public class AiClientLoadDataStrategy implements ILoadDataStrategy {
         CompletableFuture.allOf(aiClientAdvisorListFuture, aiClientListFuture, aiClientApiListFuture,
             aiClientModelListFuture, aiClientToolMcpListFuture, aiClientSystemPromptListFuture)
             .thenRun(()->{
-                // 添加到 dynamicContext
+                // 保存到 DefaultArmoryStrategyFactory.DynamicContext
                 dynamicContext.setValue(AiAgentEnumVO.AI_CLIENT_API.getDataName(), aiClientApiListFuture.join());
                 dynamicContext.setValue(AiAgentEnumVO.AI_CLIENT_MODEL.getDataName(), aiClientModelListFuture.join());
                 dynamicContext.setValue(AiAgentEnumVO.AI_CLIENT_SYSTEM_PROMPT.getDataName(), aiClientSystemPromptListFuture.join());

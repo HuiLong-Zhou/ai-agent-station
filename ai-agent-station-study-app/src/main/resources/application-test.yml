@@ -23,7 +23,7 @@ spring:
   ai:
     openai:
       base-url: https://apis.itedus.cn
-      api-key: sk-uSUkdiiA9t4GsPyyD36959F31f5f4eEb8dB74295E536D701
+      api-key: sk-l7mUtN4h3R9opgad7f0dCa68FfA545B79eA03aB9E6D16dCd
     agent:
       auto-config:
         enabled: false

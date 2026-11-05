@@ -26,6 +26,7 @@ public class AutoAgentExecuteStrategy implements IExecuteStrategy {
 
     @Override
     public void execute(ExecuteCommandEntity executeCommandEntity, ResponseBodyEmitter emitter) throws Exception {
+        // 获取责任链根节点
         StrategyHandler<ExecuteCommandEntity, DefaultAutoAgentExecuteStrategyFactory.DynamicContext, String> executeHandler
             = defaultAutoAgentExecuteStrategyFactory.armoryStrategyHandler();
 

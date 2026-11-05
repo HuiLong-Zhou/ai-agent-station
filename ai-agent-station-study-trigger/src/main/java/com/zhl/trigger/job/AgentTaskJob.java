@@ -17,6 +17,7 @@ import java.util.List;
 /**
  * <p>
  *  智能体任务
+ *  智能体业务的任务提供者，将 Agent 调度配置转换成通用任务。
  * @author zhl
  * @since 2026-05-19 21:46
  */
